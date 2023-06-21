@@ -11,11 +11,11 @@ const router = express.Router();
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // GET ALL ROUTES
-router.get("/").get(async (req, res) => {
+router.route("/").get(async (req, res) => {
   try {
     const posts = await PostModel.find({});
 
@@ -26,7 +26,7 @@ router.get("/").get(async (req, res) => {
 });
 
 // CREATE A POST
-router.get("/").post(async (req, res) => {
+router.route("/").post(async (req, res) => {
   try {
     const { name, prompt, photo } = req.body;
     const photoUrl = await cloudinary.uploader.upload(photo);
